@@ -1,0 +1,5 @@
+-------------------------------------------------------
+Angular:
+
+    ng new AppAngular --no-standalone
+    npm add ngc-bootstrap

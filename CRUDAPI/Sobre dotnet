@@ -1,0 +1,8 @@
+-------------------------------------------------------
+Dotnet:
+
+    dotnet new webapi -n CRUDAPI
+    dotnet add package Microsoft.EntityFrameworkCore
+    dotnet add package Microsoft.EntityFrameworkCore.relational
+    dotnet add package Microsoft.EntityFrameworkCore.tools
+    dotnet add package Microsoft.EntityFrameworkCore.SqlServer
