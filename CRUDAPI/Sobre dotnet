@@ -6,3 +6,5 @@ Dotnet:
     dotnet add package Microsoft.EntityFrameworkCore.relational
     dotnet add package Microsoft.EntityFrameworkCore.tools
     dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+
+teste dotnet
