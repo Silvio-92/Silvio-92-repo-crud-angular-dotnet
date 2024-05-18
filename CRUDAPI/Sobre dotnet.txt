@@ -7,3 +7,7 @@ Dotnet:
     dotnet add package Microsoft.EntityFrameworkCore.tools
     dotnet add package Microsoft.EntityFrameworkCore.SqlServer
 
+-------------------------------------------------------
+Aula 5 
+
+    Modificado o arquivo Program.cs

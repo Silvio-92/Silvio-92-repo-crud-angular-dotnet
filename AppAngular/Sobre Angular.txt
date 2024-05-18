@@ -3,3 +3,13 @@ Angular:
 
     ng new AppAngular --no-standalone
     npm add ngc-bootstrap
+
+Aula 5 
+    (comandos)
+        cd srs/app
+        ng g s Pessoas  // g= genereite - s= service
+
+    1: Add os arquivos pessoas.service.spec.ts e pessoas.service.ts
+        comando ng g s Pessoas
+
+    2. Modificado o arquivo app.module.ts
