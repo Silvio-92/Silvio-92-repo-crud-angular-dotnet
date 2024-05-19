@@ -13,6 +13,7 @@ export class PessoasComponent implements OnInit{
   tituloFormulario:string = "";
 
   ngOnInit(): void {
+    this.tituloFormulario = 'Nova Pessoa';
     this.formilario = new FormControl({
       nome: new FormControl(null),
       sobrenome: new FormControl(null),
