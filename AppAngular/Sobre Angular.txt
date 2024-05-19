@@ -36,3 +36,16 @@ Aula 6
         
     3. Midificado o arquivo app.routing.module.ts dentro da pasta app
         Pra Inicializar o componente Pessoas criado
+
+-------------------------------------------------------
+Aula 7
+    (comandos)
+
+    1. modified:   AppAngular/src/app/Components/pessoas/pessoas.component.html
+        add o html formulario de pessoas
+
+    2. modified:   AppAngular/src/app/Components/pessoas/pessoas.component.ts
+
+    3. modified:   AppAngular/src/index.html
+        add o link do bootstrap
+            <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"

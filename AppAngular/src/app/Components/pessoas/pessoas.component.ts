@@ -9,11 +9,11 @@ import { FormControl } from '@angular/forms';
 
 export class PessoasComponent implements OnInit{
 
-  formilario: any;
+  formulario: any;
   tituloFormulario:string = "";
 
   ngOnInit(): void {
-    this.formilario = new FormControl({
+    this.formulario = new FormControl({
       nome: new FormControl(null),
       sobrenome: new FormControl(null),
       idade: new FormControl(null),
