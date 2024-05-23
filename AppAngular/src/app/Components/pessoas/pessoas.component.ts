@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder,  FormGroup, Validators } from '@angular/forms';
+import { Pessoa } from '../../Pessoa';
+import { PessoasService } from '../../pessoas.service';
+
 
 @Component({
   selector: 'app-pessoas',
@@ -9,16 +12,34 @@ import { FormControl } from '@angular/forms';
 
 export class PessoasComponent implements OnInit{
 
-  formulario: any;
+  //formulario: any;
+  formulario: FormGroup;
+
   tituloFormulario:string = "";
 
-  ngOnInit(): void {
-    this.formulario = new FormControl({
-      nome: new FormControl(null),
-      sobrenome: new FormControl(null),
-      idade: new FormControl(null),
-      profissao: new FormControl(null),
+  constructor(private pessoasService : PessoasService, private formBuilder: FormBuilder){
+    this.formulario = this.formBuilder.group({ // Use formBuilder.group para inicializar o FormGroup
+      nome: [null, Validators.required], // Adicione validadores, se necessário
+      sobrenome: [null, Validators.required],
+      idade: [null, Validators.required],
+      profissao: [null, Validators.required]
     });
+  }
+
+  ngOnInit(): void {
+    this.tituloFormulario = 'Nova Pessoa';
+  }
+  
+
+  EnviarFormulario(): void {
+    if (this.formulario.valid) { // Verifique se o formulário é válido antes de enviar
+      const pessoa: Pessoa = this.formulario.value;
+      this.pessoasService.SalvarPessoa(pessoa).subscribe(resultado => {
+        alert('Pessoa inserida com sucesso');
+      });
+    } else {
+      alert('Por favor, preencha todos os campos obrigatórios.');
+    }
   }
 
 }
