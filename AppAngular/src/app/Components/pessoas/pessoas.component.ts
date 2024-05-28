@@ -42,6 +42,7 @@ export class PessoasComponent implements OnInit{
   ExibirFormularioCadastro(): void{
     this.visibilidadeTabela = false;
     this.visibilidadeFormulario = true;
+
     this.tituloFormulario = 'Nova Pessoa';
     this.formulario = this.formBuilder.group({ // Use formBuilder.group para inicializar o FormGroup
       nome: [null, Validators.required], // Adicione validadores, se necessário
@@ -51,21 +52,44 @@ export class PessoasComponent implements OnInit{
     });
   }
 
-  EnviarFormulario(): void {
-    if (this.formulario.valid) { // Verifique se o formulário é válido antes de enviar
-      const pessoa: Pessoa = this.formulario.value;
-      this.pessoasService.SalvarPessoa(pessoa).subscribe(resultado => {
-        this.visibilidadeTabela = true;
-        this.visibilidadeFormulario = false;
-        alert('Pessoa inserida com sucesso');
-        
-        this.pessoasService.PegarTodos().subscribe(registro => {
-          this.pessoas = registro;
-        });
+  ExibirFormularioAtualizacao(pessoaId: any):void  {
+    this.visibilidadeTabela = false;
+    this.visibilidadeFormulario = true;
+
+    this.pessoasService.PegarPeloId(pessoaId).subscribe(resultado => {
+      this.tituloFormulario = `Atualizar ${resultado.nome} ${resultado.sobrenome}`;
+
+      this.formulario = this.formBuilder.group({ 
+        pessoaId:[resultado.pessoaId], 
+        nome: [resultado.nome, Validators.required], 
+        sobrenome: [resultado.sobrenome, Validators.required],
+        idade: [resultado.idade, Validators.required],
+        profissao: [resultado.profissao, Validators.required]
       });
-    } else {
-      alert('Por favor, preencha todos os campos obrigatórios.');
-    }
+    });
+  }
+
+  EnviarFormulario(): void {
+      const pessoa: Pessoa = this.formulario.value;
+
+      if(pessoa.pessoaId){
+        this.pessoasService.AtualizarPessoa(pessoa).subscribe(resultado =>{
+            this.visibilidadeTabela = true;
+            this.visibilidadeFormulario = false;
+            alert('Pessoa atualizada com sucesso');
+        });
+      }
+      else {
+        this.pessoasService.SalvarPessoa(pessoa).subscribe(resultado => {
+          this.visibilidadeTabela = true;
+          this.visibilidadeFormulario = false;
+          alert('Pessoa inserida com sucesso');
+          
+          this.pessoasService.PegarTodos().subscribe(registro => {
+            this.pessoas = registro;
+          });
+        });
+      }
   }
 
   Voltar():void{

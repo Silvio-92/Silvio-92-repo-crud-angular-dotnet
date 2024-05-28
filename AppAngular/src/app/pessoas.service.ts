@@ -33,7 +33,8 @@ export class PessoasService {
   }
 
   AtualizarPessoa(pessoa: Pessoa) : Observable<any>{
-    return this.http.put<Pessoa>(this.url, pessoa, httpOptions)
+    const apiUrl = `${this.url}/${pessoa.pessoaId}`; // Inclua o ID da pessoa na URL
+    return this.http.put<Pessoa>(this.url,pessoa, httpOptions)
   }
 
   ExcluitPeloId(pessoaId: number): Observable<any>{
