@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 import { FormBuilder,  FormGroup, Validators } from '@angular/forms';
 import { Pessoa } from '../../Pessoa';
 import { PessoasService } from '../../pessoas.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 
 @Component({
@@ -15,13 +16,18 @@ export class PessoasComponent implements OnInit{
   //formulario: any;
   formulario: FormGroup;
 
-  tituloFormulario:string ="";
-  pessoas: Pessoa[] = [];
+  tituloFormulario?:string;
+  pessoas?: Pessoa[] = [];
+  nomePessoa?: string ="";
+  pessoaId: number = 0;
+
 
   visibilidadeTabela:boolean = true;
   visibilidadeFormulario:boolean = false;
 
-  constructor(private pessoasService : PessoasService, private formBuilder: FormBuilder){
+  modalRef?: BsModalRef;
+
+  constructor(private pessoasService : PessoasService, private formBuilder: FormBuilder, private modalService: BsModalService){
     this.formulario = this.formBuilder.group({ // Use formBuilder.group para inicializar o FormGroup
       nome: [null, Validators.required], // Adicione validadores, se necessário
       sobrenome: [null, Validators.required],
@@ -77,6 +83,9 @@ export class PessoasComponent implements OnInit{
             this.visibilidadeTabela = true;
             this.visibilidadeFormulario = false;
             alert('Pessoa atualizada com sucesso');
+            this.pessoasService.PegarTodos().subscribe(registro => {
+              this.pessoas = registro;
+            });
         });
       }
       else {
@@ -95,6 +104,22 @@ export class PessoasComponent implements OnInit{
   Voltar():void{
     this.visibilidadeTabela = true;
     this.visibilidadeFormulario = false;
+  }
+
+  ExibirConfirmacaoExclusao(pessoaId: number, nomePessoa: string, conteudoModal:TemplateRef<any>): void {
+    this.modalRef = this.modalService.show(conteudoModal);
+    this.pessoaId = pessoaId;
+    this.nomePessoa = nomePessoa;
+  }
+
+  ExcluirPessoa(pessoaId: number){
+    this.pessoasService.ExcluitPeloId(pessoaId).subscribe(resultado => {
+      this.modalRef?.hide();
+      alert("Pessoa excluída com sucesso");
+      this.pessoasService.PegarTodos().subscribe(registro => {
+        this.pessoas = registro;
+      });
+    })
   }
 
 }
